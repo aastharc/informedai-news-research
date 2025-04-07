@@ -6,7 +6,7 @@ from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import UnstructuredURLLoader
 
-from langchain.vectorstores import FAISS
+from langchain.vectorstores import Chroma
 
 from transformers import pipeline, T5Tokenizer, T5ForConditionalGeneration
 from langchain.llms import HuggingFacePipeline
@@ -141,7 +141,7 @@ if process_inputs_clicked:
     main_placeholder.text("📚 Splitting text into chunks...")
 
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-    vectorindex_huggingface = FAISS.from_documents(docs, embeddings)
+    vectorindex_huggingface = Chroma.from_documents(docs, embeddings)
 
     main_placeholder.text("📦 Creating Embedding Vector Index... Done!")
     time.sleep(2)
