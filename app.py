@@ -38,8 +38,8 @@ st.markdown(
     <div style='text-align: center;'>
         <h3>🛠️ How to Use:</h3>
         <ol style='text-align: left; display: inline-block; font-size: 16px;'>
-            <li>🔗 Enter the latest articles/ URLs of your choice in the sidebar.</li>
-            <li>❓ Ask any question based on the content of those articles.</li>
+            <li>🔗 Enter the latest articles/ URLs of your choice in the sidebar. Click Process.</li>
+            <li>❓ Ask any question based on the content of those articles and press enter.</li>
             <li>📚 Get answers along with source references from the provided links.</li>
         </ol>
     </div>
@@ -115,8 +115,7 @@ tokenizer = T5Tokenizer.from_pretrained("google/flan-t5-base")
 model = T5ForConditionalGeneration.from_pretrained("google/flan-t5-base")
 pipe = pipeline("text2text-generation", model=model, tokenizer=tokenizer, max_length=512)
 llmi = HuggingFacePipeline(pipeline=pipe)
-
-file_path = "vectorindex_huggingface.pkl"
+vectorindex_huggingface = None
 main_placeholder = st.empty()
 if process_inputs_clicked:
     urls = [entry["value"] for entry in input_areas if entry["type"] == "url"]
@@ -145,11 +144,7 @@ if process_inputs_clicked:
     main_placeholder.text("📦 Creating Embedding Vector Index... Done!")
     time.sleep(2)
 
-    with open(file_path, "wb") as f:
-        pickle.dump(vectorindex_huggingface, f)
-
-
-    st.success("✅ Embeddings saved")
+    
 
 # Question input
 st.markdown("<hr>", unsafe_allow_html=True)
@@ -157,20 +152,20 @@ st.subheader("💬 Ask a Question Based on the News")
 query = st.text_input("Type your question here:")
 
 # Show answer
-if query:
-    if os.path.exists(file_path):
-        with open(file_path, "rb") as f:
-            vectorstore = pickle.load(f)
+if query and vectorindex_huggingface is not None:
+    vectorstore = vectorindex_huggingface
 
-        chain = RetrievalQAWithSourcesChain.from_llm(llm=llmi, retriever=vectorstore.as_retriever())
-        with st.spinner("🤖 Generating answer..."):
-            response = chain({"question": query}, return_only_outputs=True)
+    chain = RetrievalQAWithSourcesChain.from_llm(llm=llmi, retriever=vectorstore.as_retriever())
+    with st.spinner("🤖 Generating answer..."):
+        response = chain({"question": query}, return_only_outputs=True)
 
-        st.markdown("### 🧠 Answer")
-        st.success(response["answer"])
+    st.markdown("### 🧠 Answer")
+    st.success(response["answer"])
 
-        sources = response.get("sources", "")
-        if sources:
-            st.markdown("### 🔎 Sources")
-            for source in sources.split("\n"):
-                st.markdown(f"- {source}")
+    sources = response.get("sources", "")
+    if sources:
+        st.markdown("### 🔎 Sources")
+        for source in sources.split("\n"):
+            st.markdown(f"- {source}")
+elif query:
+    st.warning("⚠️ Please click '📥 Process' after entering URLs/ articles.")
