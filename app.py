@@ -141,6 +141,7 @@ if process_inputs_clicked:
     main_placeholder.text("📚 Splitting text into chunks...")
 
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    
     vectorindex_huggingface = Chroma.from_documents(docs, embeddings)
 
     main_placeholder.text("📦 Creating Embedding Vector Index... Done!")
