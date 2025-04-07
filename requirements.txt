@@ -2,7 +2,7 @@ streamlit
 langchain==0.1.14
 langchain-community==0.0.30
 transformers==4.39.3
-chromadb>=0.4.24
+docarray
 sentence-transformers
 huggingface_hub
 sentencepiece
