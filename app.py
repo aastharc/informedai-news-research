@@ -15,21 +15,18 @@ from huggingface_hub import login
 import subprocess
 import streamlit as st
 
-st.subheader("📦 Installed Packages (for debugging)")
-installed = subprocess.check_output(["pip", "freeze"]).decode("utf-8")
-st.text(installed)
+
 
 
 
 
 # Load environment variables
-load_dotenv()
-AUTH = os.environ.get("HUGGING_FACE_AUTH")
-login(AUTH)
+
 
 # Set page configuration
 st.set_page_config(page_title="InformedAI", layout="centered")
-
+AUTH = st.secrets["HUGGING_FACE_AUTH"]
+login(AUTH)
 # Page title
 st.markdown("<h1 style='text-align: center;'> InformedAI: News Research Tool 📈</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: center; font-size: 18px; color: gray;'>Your intelligent news assistant, powered by language models and real-world data.</p>", unsafe_allow_html=True)
