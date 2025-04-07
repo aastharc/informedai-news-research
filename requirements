@@ -1,9 +1,9 @@
 sentencepiece
+langchain
 langchain-community==0.0.20
 faiss-cpu==1.7.4
 numpy==1.26.4
 streamlit
-langchain
 transformers
 accelerate
 sentence-transformers
