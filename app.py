@@ -21,6 +21,7 @@ st.text(installed)
 
 
 
+
 # Load environment variables
 load_dotenv()
 AUTH = os.environ.get("HUGGING_FACE_AUTH")
