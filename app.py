@@ -12,6 +12,15 @@ from langchain.embeddings import HuggingFaceEmbeddings
 from dotenv import load_dotenv
 from huggingface_hub import login
 
+import subprocess
+import streamlit as st
+
+st.subheader("📦 Installed Packages (for debugging)")
+installed = subprocess.check_output(["pip", "freeze"]).decode("utf-8")
+st.text(installed)
+
+
+
 # Load environment variables
 load_dotenv()
 AUTH = os.environ.get("HUGGING_FACE_AUTH")
