@@ -5,8 +5,10 @@ transformers==4.39.3
 sentence-transformers
 huggingface_hub
 sentencepiece
+chromadb
 faiss-cpu==1.7.3
 python-dotenv
 accelerate
 unstructured
 numpy==1.26.4
+
