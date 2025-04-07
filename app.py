@@ -142,7 +142,7 @@ if process_inputs_clicked:
 
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
     
-    vectorindex_huggingface = DocArrayInMemorySearch.from_documents(docs, embeddings)
+    vectorindex_huggingface = llm.from_documents(docs, embeddings)
 
     main_placeholder.text("📦 Creating Embedding Vector Index... Done!")
     time.sleep(2)
