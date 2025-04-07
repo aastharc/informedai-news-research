@@ -1,6 +1,7 @@
 import os
 import streamlit as st
 import pickle
+import torch
 import time
 from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -109,6 +110,11 @@ for i in range(4):
 
 
 
+
+try:
+    _ = torch.classes
+except Exception:
+    pass
 
 process_inputs_clicked= st.sidebar.button("📥 Process")
 
