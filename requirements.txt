@@ -1,4 +1,5 @@
 streamlit
+torch
 langchain==0.1.14
 langchain-community==0.0.30
 transformers==4.39.3
